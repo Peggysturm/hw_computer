@@ -18,10 +18,10 @@
   <ItemGroup>
     <Resource Include="faultyoscilloscope.jpg" />
     <Resource Include="Resources\matb.png" />
+    <Resource Include="workingoscilloscope.jpg" />
     <Content Include="Resources\wrong.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="workingoscilloscope.jpg" />
   </ItemGroup>
 
 </Project>
