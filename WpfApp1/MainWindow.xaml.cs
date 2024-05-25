@@ -62,7 +62,7 @@ namespace WpfApp1
 
         private void ToggleButtonsOffExcept(ToggleButton clickedButton)
         {
-            foreach (var button in new[] { ResistanceButton, VoltageButton, CurrentButton, OscilloscopeButton, RamTesterButton, PcieTesterButton, CpuSocketTesterButton })
+            foreach (var button in new[] { Resistance_btn, Voltage_Click_btn, Current_btn, oscilloscope_btn, ram_tester_button, Pcie_tester_button, cpu_socket_tester_button })
             {
                 if (button != clickedButton)
                     button.IsChecked = false;
@@ -81,17 +81,17 @@ namespace WpfApp1
 
         private void Voltage3_3V_Click(object sender, RoutedEventArgs e)
         {
-            PerformTest(VoltageButton, 3.3, 3.0, 3.6, "линии 3.3V", "+3,3 ± 0,3 вольт", ResistanceButton, 100, 10000, "от 100 Ом до 10 кОм");
+            PerformTest(Voltage_Click_btn, 3.3, 3.0, 3.6, "линии 3.3V", "+3,3 ± 0,3 вольт", Resistance_btn, 100, 10000, "от 100 Ом до 10 кОм");
         }
 
         private void Voltage5V_Click(object sender, RoutedEventArgs e)
         {
-            PerformTest(VoltageButton, 5, 4.5, 5.5, "линии 5V", "+5 ± 0,5 вольт", ResistanceButton, 100, 10000, "от 100 Ом до 10 кОм");
+            PerformTest(Voltage_Click_btn, 5, 4.5, 5.5, "линии 5V", "+5 ± 0,5 вольт", Resistance_btn, 100, 10000, "от 100 Ом до 10 кОм");
         }
 
         private void Voltage12V_Click(object sender, RoutedEventArgs e)
         {
-            PerformTest(VoltageButton, 12, 11.8, 13.2, "линии 12V", "+12V ± 1,2 вольта", ResistanceButton, 1000, 20000, "от 1 кОм до 20 кОм");
+            PerformTest(Voltage_Click_btn, 12, 11.8, 13.2, "линии 12V", "+12V ± 1,2 вольта", Resistance_btn, 1000, 20000, "от 1 кОм до 20 кОм");
         }
 
         private void PerformTest(ToggleButton primaryButton, double nominalVoltage, double minVoltage, double maxVoltage, string voltageLine, string voltageRange, ToggleButton secondaryButton, double minResistance, double maxResistance, string resistanceRange)
@@ -106,26 +106,26 @@ namespace WpfApp1
             }
             else
             {
-                OutputTextBlock.Text = "Выбран неправильный метод тестирования.";
+                OutputTextBlock.Text = "НЕПРАВИЛЬНО!!! ПОПРОБУЙ ЕЩЁ РАЗ!!!";
                 PlaySound("Resources/wrong.mp3");
             }
         }
 
         private void TestVoltage(double nominalVoltage, double minVoltage, double maxVoltage, string lineName, string normalRange)
         {
-            double voltage = GenerateRandomValue(nominalVoltage - 1, nominalVoltage + 1, minVoltage, maxVoltage);
+            double voltage = GenerateRandomVal(nominalVoltage - 1, nominalVoltage + 1, minVoltage, maxVoltage);
             OutputTextBlock.Text = $"Напряжение {lineName}: {voltage:F1} В";
             EvaluateTestResult(voltage >= minVoltage && voltage <= maxVoltage, lineName, normalRange);
         }
 
         private void TestResistance(double minResistance, double maxResistance, string lineName, string normalRange)
         {
-            double resistance = GenerateRandomValue(0, minResistance, minResistance, maxResistance);
+            double resistance = GenerateRandomVal(0, minResistance, minResistance, maxResistance);
             OutputTextBlock.Text = $"Сопротивление {lineName}: {resistance:F1} Ом";
             EvaluateTestResult(resistance >= minResistance && resistance <= maxResistance, lineName, normalRange);
         }
 
-        private double GenerateRandomValue(double lowRangeStart, double lowRangeEnd, double highRangeStart, double highRangeEnd)
+        private double GenerateRandomVal(double lowRangeStart, double lowRangeEnd, double highRangeStart, double highRangeEnd)
         {
             Random rand = new Random();
             return (rand.Next(2) == 0) ? lowRangeStart + rand.NextDouble() * (lowRangeEnd - lowRangeStart) : highRangeStart + rand.NextDouble() * (highRangeEnd - highRangeStart);
@@ -140,17 +140,17 @@ namespace WpfApp1
 
         private void SocketButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformComponentTest(CpuSocketTesterButton, "сокета ЦПУ", new[] { "Все индикаторы горят красным", "Часть индикаторов не горит", "Ни один из индикаторов не горит" }, "при исправном сокете процессора все индикаторы должны гореть красным.");
+            PerformComponentTest(cpu_socket_tester_button, "сокета ЦПУ", new[] { "Все индикаторы горят красным", "Часть индикаторов не горит", "Ни один из индикаторов не горит" }, "при исправном сокете процессора все индикаторы должны гореть красным.");
         }
 
         private void RamButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformComponentTest(RamTesterButton, "слота ОЗУ", new[] { "Все индикаторы горят красным", "Часть индикаторов не горит", "Ни один из индикаторов не горит" }, "при исправном слоте ОЗУ все индикаторы должны гореть красным.");
+            PerformComponentTest(ram_tester_button, "слота ОЗУ", new[] { "Все индикаторы горят красным", "Часть индикаторов не горит", "Ни один из индикаторов не горит" }, "при исправном слоте ОЗУ все индикаторы должны гореть красным.");
         }
 
         private void PcieButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformComponentTest(PcieTesterButton, "слота PCIe", new[] { "Есть сигнал", "Нет сигнала" }, "должен быть сигнал.");
+            PerformComponentTest(Pcie_tester_button, "слота PCIe", new[] { "Есть сигнал", "Нет сигнала" }, "должен быть сигнал.");
         }
 
         private void PerformComponentTest(ToggleButton testerButton, string element, string[] messages, string explanation)
@@ -161,7 +161,7 @@ namespace WpfApp1
             }
             else
             {
-                OutputTextBlock.Text = "Выбран неправильный метод тестирования.";
+                OutputTextBlock.Text = "НЕПРАВИЛЬНО!!! ПОПРОБУЙ ЕЩЁ РАЗ!!!";
                 PlaySound("Resources/wrong.mp3");
             }
         }
@@ -178,12 +178,12 @@ namespace WpfApp1
 
         private void BiosButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformOscilloscopeTest(OscilloscopeButton, "BIOS");
+            PerformOscilloscopeTest(oscilloscope_btn, "BIOS");
         }
 
         private void QuartzButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformOscilloscopeTest(OscilloscopeButton, "кварцевого резонатора");
+            PerformOscilloscopeTest(oscilloscope_btn, "кварцевого резонатора");
         }
 
         private void PerformOscilloscopeTest(ToggleButton testerButton, string element)
@@ -194,7 +194,7 @@ namespace WpfApp1
             }
             else
             {
-                OutputTextBlock.Text = "Выбран неправильный метод тестирования.";
+                OutputTextBlock.Text = "НЕПРАВИЛЬНО!!! ПОПРОБУЙ ЕЩЁ РАЗ!!!";
             }
         }
 
@@ -215,12 +215,12 @@ namespace WpfApp1
 
         private void BiosBatteryButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformSingleTest(VoltageButton, 3.0, 2.7, 3.3, "батарейки BIOS", "+3 ± 0,3 вольт");
+            PerformSingleTest(Voltage_Click_btn, 3.0, 2.7, 3.3, "батарейки BIOS", "+3 ± 0,3 вольт");
         }
 
         private void UsbButton_Click(object sender, RoutedEventArgs e)
         {
-            PerformSingleTest(VoltageButton, 5.0, 4.75, 5.25, "линии USB", "5V ± 0,25V");
+            PerformSingleTest(Voltage_Click_btn, 5.0, 4.75, 5.25, "линии USB", "5V ± 0,25V");
         }
 
         private void PerformSingleTest(ToggleButton testerButton, double nominalVoltage, double minVoltage, double maxVoltage, string lineName, string normalRange)
@@ -231,7 +231,7 @@ namespace WpfApp1
             }
             else
             {
-                OutputTextBlock.Text = "Выбран неправильный метод тестирования.";
+                OutputTextBlock.Text = "НЕПРАВИЛЬНО!!! ПОПРОБУЙ ЕЩЁ РАЗ!!!";
                 PlaySound("Resources/wrong.mp3");
             }
         }

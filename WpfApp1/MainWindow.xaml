@@ -8,16 +8,11 @@
         Title="Игруля" Height="700" Width="1300"
         MinHeight="700" MinWidth="1300">
     <Grid Background="Black">
-        <!-- Верхняя панель инструментов -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="4"/>
-            <!-- Новая строка для увеличения серой зоны -->
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Верхняя панель инструментов -->
-        <Grid Grid.Row="0" Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="123*"/>
+            <ColumnDefinition Width="7*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Background="Black" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -26,41 +21,36 @@
 
             <!-- Мультиметр -->
             <DockPanel Grid.Column="0" Margin="10,0">
-                <Label Content="Мультиметр" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,5" FontSize="16"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <ToggleButton x:Name="VoltageButton" Width="170" Height="40" Click="TestMethodToggleButton_Click" Background="LightBlue" Foreground="Black" Margin="5,0">
+                <Canvas x:Name="MultimeterCanvas" HorizontalAlignment="Center">
+                    <ToggleButton x:Name="Voltage_Click_btn" Width="140" Height="80" Background="Red" Foreground="Black" Canvas.Left="5" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <TextBlock Text="Проверка напряжения" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="13"/>
                     </ToggleButton>
-                    <ToggleButton x:Name="ResistanceButton" Width="170" Height="40" Click="TestMethodToggleButton_Click" Background="LightGreen" Foreground="Black">
+                    <ToggleButton x:Name="Resistance_btn" Width="149" Height="79" Background="Red" Foreground="Black" Canvas.Left="150" HorizontalAlignment="Center" VerticalAlignment="Top">
                         <TextBlock Text="Проверка сопротивления" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="13"/>
                     </ToggleButton>
-                    <ToggleButton x:Name="CurrentButton" Width="170" Height="40" Click="TestMethodToggleButton_Click" Background="LightYellow" Foreground="Black">
+                    <ToggleButton x:Name="Current_btn" Width="177" Height="78" Background="Red" Foreground="Black" Canvas.Left="320" Canvas.Top="0" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <TextBlock Text="Проверка силы тока" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" FontSize="13"/>
                     </ToggleButton>
-                </StackPanel>
+                </Canvas>
             </DockPanel>
 
-
             <!-- Разделитель с отступами -->
-            <Grid Grid.Column="1" VerticalAlignment="Stretch" Margin="0,10">
-                <Border BorderBrush="DarkGray" BorderThickness="0.5" VerticalAlignment="Stretch"/>
-            </Grid>
+            <Grid Grid.Column="1" VerticalAlignment="Stretch" Margin="0,10"/>
 
             <!-- Остальные кнопки -->
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left">
-                <ToggleButton x:Name="CpuSocketTesterButton" Content="Тестер сокета ЦПУ" Click="TestMethodToggleButton_Click" Width="150" Height="76" Margin="10,0" FontSize="13" RenderTransformOrigin="0.472,0.458"/>
-                <ToggleButton x:Name="OscilloscopeButton" Content="Осциллограф" Click="TestMethodToggleButton_Click" Width="150" Height="81" FontSize="13"/>
-                <ToggleButton x:Name="PcieTesterButton" Content="Тестер PCIe" Click="TestMethodToggleButton_Click" Width="150" Height="79" Margin="10,0" FontSize="13"/>
-                <ToggleButton x:Name="RamTesterButton" Content="Тестер ОЗУ" Click="TestMethodToggleButton_Click" Width="150" Height="80" Margin="10,0" FontSize="13"/>
-               
-            </StackPanel>
+            <Canvas Grid.Column="2" x:Name="OtherButtonsCanvas" HorizontalAlignment="Left" Margin="9,0,0,0" Width="651">
+                <ToggleButton x:Name="cpu_socket_tester_button" Content="Тестер сокета ЦПУ" Width="150" Height="78" FontSize="13" Background="Red" Canvas.Left="501" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ToggleButton x:Name="oscilloscope_btn" Content="Осциллограф" Width="150" Height="77" FontSize="13" Background="Red" Canvas.Left="700" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ToggleButton x:Name="Pcie_tester_button" Content="Тестер PCIe" Width="150" Height="77" FontSize="13" Background="Red" Canvas.Left="876" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ToggleButton x:Name="ram_tester_button" Content="Тестер ОЗУ" Width="150" Height="78" FontSize="13" Background="Red" Canvas.Left="1076" Canvas.Top="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
         </Grid>
 
         <!-- Пустое пространство для увеличения серой зоны -->
-        <Grid Grid.Row="1" Background="LightGray"/>
+        <Grid Background="Red" Grid.ColumnSpan="2" Margin="0,81,0,0" Grid.RowSpan="2"/>
 
         <!-- Основная часть окна -->
-        <Grid Grid.Row="2" Background="Black">
+        <Grid Background="Black" Grid.ColumnSpan="2" Margin="0,91,0,-77">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -70,21 +60,21 @@
             <Viewbox Grid.Column="0">
                 <Canvas Width="500" Height="500">
                     <Image Source="/Resources/matb.png" Stretch="Uniform" Width="500" Height="500"/>
-                    <Button Content="3.3V" Canvas.Left="361" Canvas.Top="240" Width="27" Height="20" Click="Voltage3_3V_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Button Content="5V" Canvas.Left="370" Canvas.Top="190" Width="18" Height="17" Click="Voltage5V_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button Content="12V" Canvas.Left="163" Canvas.Top="102" Width="30" Height="29" Click="Voltage12V_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Content="3.3V" Canvas.Left="361" Canvas.Top="240" Width="27" Height="20" Click="Voltage3_3V_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Red"/>
+                    <Button Content="5V" Canvas.Left="370" Canvas.Top="190" Width="18" Height="17" Click="Voltage5V_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red"/>
+                    <Button Content="12V" Canvas.Left="163" Canvas.Top="102" Width="30" Height="29" Click="Voltage12V_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red"/>
 
-                    <Button Content="Socket" Canvas.Left="230" Canvas.Top="152" Width="65" Height="98" Click="SocketButton_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                    <Button Content="RAM" Canvas.Left="323" Canvas.Top="102" Width="33" Height="198" Click="RamButton_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Button Content="PCIe" Canvas.Left="177" Canvas.Top="300" Width="141" Height="20" Click="PcieButton_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <Button Content="Socket" Canvas.Left="230" Canvas.Top="152" Width="65" Height="98" Click="SocketButton_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red"/>
+                    <Button Content="RAM" Canvas.Left="323" Canvas.Top="102" Width="33" Height="198" Click="RamButton_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Red"/>
+                    <Button Content="PCIe" Canvas.Left="177" Canvas.Top="300" Width="141" Height="20" Click="PcieButton_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Red"/>
 
-                    <Button Canvas.Left="144" Canvas.Top="351" Width="44" Height="40" Click="BiosBatteryButton_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Button Canvas.Left="144" Canvas.Top="351" Width="44" Height="40" Click="BiosBatteryButton_Click" Opacity="0.7" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Red">
                         <TextBlock Text="BIOS Battery" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Width="40"/>
                     </Button>
 
-                    <Button Content="BIOS" Canvas.Left="129" Canvas.Top="331" Width="29" Height="20" Click="BiosButton_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <Button Content="USB" Canvas.Left="115" Canvas.Top="180" Width="38" Height="91" Click="UsbButton_Click" Opacity="0.7" RenderTransformOrigin="2.162,0.178"/>
-                    <Button Content="Quartz" Canvas.Left="262" Canvas.Top="383" Width="40" Height="20" Click="QuartzButton_Click" Opacity="0.7"/>
+                    <Button Content="BIOS" Canvas.Left="129" Canvas.Top="331" Width="29" Height="20" Click="BiosButton_Click" Opacity="0.7" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Red"/>
+                    <Button Content="USB" Canvas.Left="115" Canvas.Top="180" Width="38" Height="91" Click="UsbButton_Click" Opacity="0.7" RenderTransformOrigin="2.162,0.178" Background="Red"/>
+                    <Button Content="Quartz" Canvas.Left="262" Canvas.Top="383" Width="40" Height="20" Click="QuartzButton_Click" Opacity="0.7" Background="Red"/>
                 </Canvas>
             </Viewbox>
 
